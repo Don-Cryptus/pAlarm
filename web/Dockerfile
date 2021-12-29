@@ -13,6 +13,9 @@ RUN yarn install --frozen-lockfile
 FROM node:16-alpine AS builder
 WORKDIR /app
 
+ARG REACT_APP_SERVER_HOST
+ENV REACT_APP_SERVER_HOST=$REACT_APP_SERVER_HOST
+
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 RUN yarn build 

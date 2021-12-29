@@ -3,31 +3,28 @@ version: "3.4"
 services:
   web:
     hostname: palarm-web
-    ports:
-      - 666:666
+    # ports:
+    #   - 666:666
     build:
       context: web/
       dockerfile: Dockerfile
+      args:
+        - REACT_APP_SERVER_HOST=https://palarm.myngz.com
     restart: always
-    environment:
-      - GENERATE_SOURCEMAP=false
-      - SERVER_HOST=http://palarm-server:5000
-      - NGINX_PORT=666
     networks:
-      - nginx-network
+      - ngix-manager_default
   server:
     hostname: palarm-server
-    ports:
-      - 5000:5000
+    # ports:
+    #   - 5000:5000
     build:
       context: server/
       dockerfile: Dockerfile
     restart: always
     networks:
-      - nginx-network
-
+      - ngix-manager_default
 
 networks:
-  nginx-network:
-    external:
-      name: nginx-network
+  ngix-manager_default:
+    external: false
+    name: ngix-manager_default
